@@ -1,0 +1,38 @@
+from abc import ABC, abstractmethod
+
+class Document(ABC):
+    @abstractmethod
+    def save(self):
+        pass
+
+    @abstractmethod
+    def load(self):
+        pass
+
+class EncryptedMixin:
+    def encrypt(self):
+        print(f"Encrypting {self.__class__.__name__}")
+
+class WordDocument(Document, EncryptedMixin):
+    def save(self):
+        print("Saving Word")
+
+    def load(self):
+        print("Loading Word")
+
+class PDFDocument(Document, EncryptedMixin):
+    def save(self):
+        print("Saving PDF")
+
+    def load(self):
+        print("Loading PDF")
+
+doc = WordDocument()
+doc.save()
+doc.load()
+doc.encrypt()
+
+
+
+
+
