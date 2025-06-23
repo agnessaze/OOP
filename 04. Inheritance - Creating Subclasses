@@ -1,0 +1,32 @@
+""" Task: Create class hierarchy for Employee and Manager
+
+Employee class with name and salary attributes, method work()
+
+Manager inherits Employee
+
+Override work() in Manager to add "Managing team" message
+
+Use super() to call parent work() inside overridden method"""
+
+class Employee:
+    def __init__(self,name,salary):
+        self.name=name
+        self.salary=salary
+
+    def work(self):
+        print(f"{self.name} is working. Salary: ${self.salary}")
+
+class Manager(Employee):
+    def __init__(self,name,salary):
+        super().__init__(name,salary)
+
+    def work(self):
+        super().work()  # Call the parent method first
+        print(f"{self.name} is managing the team.")
+
+e = Employee("Agnesa", 5000)
+e.work()
+
+
+m = Manager("Agnesa", 8000)
+m.work()
