@@ -1,0 +1,25 @@
+# Challenge: Create Class: Student
+# Create an object and test all methods. 
+
+class Student:
+    def __init__(self, name, major, grade):
+        self.name = name
+        self.major = major
+        self.grade = grade
+
+    def is_passed(self):
+        return self.grade >= 60
+
+    def update_grade(self, new_grade):
+        self.grade = new_grade
+
+    def display_info(self):
+        print(f"{self.name} majors in {self.major} with a grade of {self.grade}")
+
+s0 = Student("Agnesa","IE",79)
+print("Passed?", s0.is_passed())
+s0.display_info()
+
+print("Current grade:", s0.grade)
+s0.update_grade(100)
+s0.display_info()
