@@ -1,0 +1,60 @@
+"""Task: Create a Library Class
+Scenario:
+You're building a system to track books in a library. You want to represent the library as an object that can hold multiple books, compare itself to others, and be printed nicely.
+
+Requirements
+Class: Library
+Attributes:
+
+name – name of the library
+
+books – a list of book titles (strings)
+
+Dunder Methods:
+
+__str__() → return something like: "Library 'City Central' with 3 books"
+
+__len__() → return number of books in the library
+
+__add__(self, other) → merge two libraries into a new one (combine book lists and names)
+
+__eq__(self, other) → return True if both libraries have the same number of books
+
+🔸 Tests:
+Create two Library instances with different books.
+
+Compare them using ==.
+
+Merge them using +.
+
+Use len() and print() to see behaviors."""
+
+class Library:
+    def __init__(self, name, books):
+        self.name = name
+        self.books = books
+
+    def __str__(self):
+        return "Library '{}' with {} books".format(self.name, len(self.books))
+
+    def __len__(self):
+        return len(self.books)
+
+    def __add__(self, other):
+        return Library(self.name, self.books + other.books)
+
+    def __eq__(self, other):
+        return len(self.books) == len(other.books)
+
+l1 = Library("Hevzi Sylejmani", ["The Alchemist", "1984"])
+l2=Library("Pjeter Bogdani", ["Le petit Price","1943"])
+
+print(l1)
+print(l2)
+
+print("Do they have the same number of books?", l1 == l2)
+
+l0=l1+l2
+print(l0)
+
+print("Total books in merged library:", len(l0))
