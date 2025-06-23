@@ -1,0 +1,55 @@
+"""Modify:
+
+Add a Battery class and plug it into ElectricCar via composition.
+
+Refactor Vehicle so Car and Bike use composition.
+
+"""
+
+# Inheritance example
+"""class Engine:
+    def start(self):
+        print("Engine started.")
+
+class Car(Engine):
+    def drive(self):
+        print("Car is moving.")
+
+# Composition example
+class Engine:
+    def start(self):
+        print("Engine started.")
+
+class Car:
+    def __init__(self):
+        self.engine = Engine()
+
+    def drive(self):
+        self.engine.start()
+        print("Car is moving.")"""
+
+class Battery:
+    def __init__(self, capacity):
+        self.capacity = capacity
+
+class Engine:
+    def __init__(self, horse_power):
+        self.horse_power = horse_power
+
+class ElectricCar:
+    def __init__(self, battery_capacity, horse_power):
+        self.battery = Battery(battery_capacity)
+        self.engine = Engine(horse_power)
+
+    def display_car(self):
+        return f"ElectricCar with {self.engine.horse_power} hp and {self.battery.capacity} kWh battery"
+
+
+car0 = ElectricCar(horse_power=500, battery_capacity=24)
+car1 = ElectricCar(horse_power=670, battery_capacity=81)
+
+
+print(car0.display_car())
+print(car1.display_car())
+
+
