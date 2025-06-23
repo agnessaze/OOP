@@ -1,0 +1,39 @@
+class BankAccount():
+    def __init__(self, balance):
+        self.__balance = balance
+
+    @property
+    def balance(self):
+        return self.__balance
+
+    @balance.setter
+    def balance(self, value):
+        if value < 0:
+            raise ValueError("Balance cannot be negative!")
+        self.__balance = value
+
+    def deposit(self, amount):
+        if amount <= 0:
+            raise ValueError("Deposit amount must be greater than zero!!")
+        self.__balance += amount
+
+    def withdraw(self, amount):
+        if amount > self.__balance:
+            raise ValueError("Withdraw cannot be greater than balance!")
+        self.__balance -= amount
+
+    def __str__(self):
+        return f"Current balance: ${self.__balance}"
+
+
+account = BankAccount(100)
+print(account.balance)  # 100
+
+account.deposit(50)
+print(account.balance)  # 150
+
+account.withdraw(30)
+print(account.balance)  # 120
+
+# account.withdraw(200)  # Kjo do japë error: Withdraw cannot be greater than balance!
+# account.balance = -50  # Kjo do japë error: Balance cannot be negative!
