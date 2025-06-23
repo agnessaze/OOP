@@ -1,0 +1,51 @@
+'''  Task: Create a BankAccount class
+
+Attributes: owner, balance
+
+Methods:
+
+deposit(amount)
+
+withdraw(amount)
+
+@staticmethod validate_amount(amount) – returns True if amount > 0
+
+@classmethod default_account(cls) – returns a default account with $100'''
+
+class BankAccount:
+    def __init__(self, owner, balance):
+        self.owner = owner
+        self.balance = balance
+        self.history = []
+
+    def deposit(self, amount):
+        if self.validate_amount(amount):
+            self.balance += amount
+        else:
+            print("Invalid deposit amount.")
+
+    def withdraw(self, amount):
+        if self.validate_amount(amount) and amount <= self.balance:
+            self.balance -= amount
+        else:
+            print("Invalid or insufficient funds.")
+
+    @staticmethod
+    def validate_amount(amount):
+        return amount > 0
+
+    @classmethod
+    def default_account(cls):
+        return cls("Default Owner", 100)
+
+    def transaction_history(self):
+        print("Transaction history")
+
+
+acc1 = BankAccount("Agnesa", 250)
+acc1.deposit(50)
+acc1.withdraw(100)
+print(f"Owner: {acc1.owner}, Balance: ${acc1.balance}")
+
+acc2 = BankAccount.default_account()
+print(f"Default Account -> Owner: {acc2.owner}, Balance: ${acc2.balance}")
