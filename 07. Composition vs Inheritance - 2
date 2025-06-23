@@ -1,0 +1,53 @@
+# Vehicle has something like: start_engine(), stop_engine()
+# Car and Bike use it inside themselves (not by inheritance)
+
+class Vehicle:
+    def __init__(self, make, model, year, fuel_type):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.fuel_type = fuel_type
+
+    def start_engine(self):
+        print(f"{self.make} {self.model} engine started.")
+
+    def stop_engine(self):
+        print(f"{self.make} {self.model} engine stopped.")
+
+class Car:
+    def __init__(self, make, model, year, fuel_type):
+        self.vehicle = Vehicle(make, model, year, fuel_type)
+
+    def drive(self):
+        self.vehicle.start_engine()
+        print("Car is driving.")
+        self.vehicle.stop_engine()
+
+class Bike:
+    def __init__(self, make, model, year, fuel_type):
+        self.vehicle = Vehicle(make, model, year, fuel_type)
+
+    def ride(self):
+        self.vehicle.start_engine()
+        print("Bike is riding.")
+        self.vehicle.stop_engine()
+
+class Truck:
+    def __init__(self, make, model, year, fuel_type):
+        self.vehicle = Vehicle(make, model, year, fuel_type)
+
+    def drive(self):
+        self.vehicle.start_engine()
+        print("Truck is riding.")
+        self.vehicle.stop_engine()
+
+
+
+car = Car("Toyota", "Corolla", 2020, "diesel")
+bike = Bike("Yamaha", "R15", 2022, "biodisel")
+truck = Truck("MAN", "TGX", 2022, "biodisel")
+
+car.drive()
+bike.ride()
+truck.drive()
+
