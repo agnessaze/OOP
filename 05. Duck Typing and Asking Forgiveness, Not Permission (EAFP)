@@ -1,0 +1,39 @@
+"""Task: Create a Media Player with Polymorphism
+
+Create an abstract class Media with a method play()
+
+Subclasses:
+
+Song → plays audio
+
+Podcast → plays voice
+
+Audiobook → plays narration
+
+Create a list of different media objects and call .play() on each
+(They should all behave differently but use the same method)"""
+
+from abc import ABC, abstractmethod
+class Media(ABC):
+    @abstractmethod
+    def play(self):
+        pass
+
+class Song(Media):
+    def play(self):
+        print("Audio is playing!")
+
+class Podcast(Media):
+    def play(self):
+        print("Podcast is playing!")
+
+class Audiobook(Media):
+    def play(self):
+        print("Narration is playing!")
+
+Selfish = Song()
+Selfish.play()
+Huberman = Podcast()
+Huberman.play()
+Attached = Audiobook()
+Attached.play()
