@@ -1,0 +1,27 @@
+class CPU:
+    def process(self):
+        print("CPU is processing data...")
+
+class RAM:
+    def load(self):
+        print("RAM is loading programs...")
+
+class Storage:
+    def read_write(self):
+        print("Storage is reading/writing data...")
+
+class Computer:
+    def __init__(self):
+        self.cpu = CPU()
+        self.ram = RAM()
+        self.storage = Storage()
+
+    def run(self):
+        self.cpu.process()
+        self.ram.load()
+        self.storage.read_write()
+
+my_pc = Computer()
+my_pc.run()
+
+
