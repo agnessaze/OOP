@@ -1,0 +1,70 @@
+"""🔁 Modify:
+
+Add Rectangle and Triangle as subclasses
+
+Create a LoggableMixin that adds a .log() method to any class
+
+Combine it with Shape to create LoggedShape"""
+
+from abc import ABC, abstractmethod
+
+# Abstract base class
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius ** 2
+
+    def __str__(self):
+        return f"{self.__class__.__name__} with area {self.area()}"
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+    def __str__(self):
+        return f"{self.__class__.__name__} with area {self.area()}"
+
+class Triangle(Shape):
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
+
+    def area(self):
+        return 0.5 * self.base * self.height
+
+    def __str__(self):
+        return f"{self.__class__.__name__} with area {self.area()}"
+
+class LoggableMixin:
+    def log(self):
+        print(f"[LOG] {self}")
+
+class LoggedCircle(Circle, LoggableMixin):
+    pass
+
+class LoggedRectangle(Rectangle, LoggableMixin):
+    pass
+
+class LoggedTriangle(Triangle, LoggableMixin):
+    pass
+
+shapes = [
+    LoggedCircle(5),
+    LoggedRectangle(4, 6),
+    LoggedTriangle(3, 7)
+]
+
+for shape in shapes:
+    shape.log()
+
