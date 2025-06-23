@@ -1,0 +1,57 @@
+"""Task: Create a Wallet class
+
+Attributes:
+
+owner, balance, transactions (list)
+
+Methods:
+
+__str__ → print owner's balance
+
+__add__ → combine two Wallet objects
+
+__len__ → return number of transactions
+
+__eq__ → check if two wallets have the same balance
+
+Create 2 wallet objects, test addition and equality, and print length (number of transactions)"""
+
+class Wallet:
+    def __init__(self, owner, balance):
+        self.owner = owner
+        self.balance = balance
+        self.transactions = []
+
+    def __str__(self):
+        return f"{self.owner} balance: {self.balance}"
+
+    def __add__(self, other):
+        new_owner = f"{self.owner} & {other.owner}"
+        new_balance = self.balance + other.balance
+        new_wallet = Wallet(new_owner, new_balance)
+        new_wallet.transactions = self.transactions + other.transactions
+        return new_wallet
+
+    def __len__(self):
+        return len(self.transactions)
+
+    def __eq__(self, other):
+        return self.balance == other.balance
+
+
+w0 = Wallet("Agnesa", 100)
+w1 = Wallet("Banana", 100)
+
+# __str__ test
+print(w0)
+print(w1)
+
+# __len__ test
+print(f"Transaction count in {w1.owner}'s wallet:", len(w1))
+
+# __eq__ test
+print("Are the balances equal?", w0 == w1)
+
+# __add__ test
+w2 = w0 + w1
+print(w2)
