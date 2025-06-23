@@ -1,0 +1,134 @@
+from abc import ABC, abstractmethod
+class Product:
+    def __init__(self, id, name, price, stock_quantity):
+        self.name = name
+        self.id = id
+        self.price = price
+        self.stock_quantity = stock_quantity
+
+    def update_stock(self, amount):
+        self.stock_quantity += amount
+
+    def __str__(self):
+        return f"'{self.name}' costs $ {self.price}"
+
+    def __repr__(self):
+        return f"Product('{self.name}', {self.price})"
+
+class User_Base(ABC):
+    def __init__(self, user_id, name):
+        self.user_id = user_id
+        self.name = name
+        self.email = self.name.lower().replace(' ', '') + '@gmail.com'
+
+
+    def __str__(self):
+        return f"'{self.name}' with ID: {self.user_id}"
+
+    @abstractmethod
+    def login(self,username):
+        pass
+
+class Customer(User_Base):
+    def __init__(self, user_id, name, address, loyalty_years):
+        super().__init__(user_id, name)
+        self.address = address
+        self.loyalty_years = loyalty_years
+
+    def __str__(self):
+        return f"'{self.name}' with ID: {self.user_id} has a discount of {self.loyalty_years * 8}%"
+
+    def login(self, username):
+        return username == self.name
+
+class Admin(User_Base):
+    def __init__(self, user_id, name, years_of_experience):
+        super().__init__(user_id, name)
+        self.years_of_experience = years_of_experience
+
+    def __str__(self):
+        return f"'{self.name}' with ID: {self.user_id} has a discount of {self.years_of_experience * 10}%"
+
+    def login(self, username):
+        return username == self.name
+
+class Order:
+    def __init__(self, customer: Customer, product: Product, quantity: int):
+        self.customer = customer
+        self.product = product
+        self.quantity = quantity
+        self.status = "Created"
+
+    def make_order(self):
+        if self.product.stock_quantity >= self.quantity:
+            self.product.update_stock(-self.quantity)
+            self.status = "Confirmed"
+            print(f"Order placed for {self.quantity} units of {self.product.name}.")
+        else:
+            self.status = "Failed"
+            print("Order failed: Not enough stock.")
+
+    def cancel_order(self):
+        if self.status == "Confirmed":
+            self.product.update_stock(self.quantity)
+            self.status = "Cancelled"
+            print("Order cancelled and stock restored.")
+        else:
+            print("Cannot cancel an unconfirmed or already cancelled order.")
+
+    def process_order(self):
+        if self.status == "Confirmed":
+            print("Order is being processed.")
+            self.status = "Processed"
+        else:
+            print("Order not confirmed. Cannot process.")
+
+
+class Payment(Order):
+    def __init__(self, customer: Customer, product: Product, quantity: int, method_of_payment: str):
+        super().__init__(customer, product, quantity)
+        self.method_of_payment = method_of_payment
+        self.total_paycheck = self.product.price * self.quantity
+        self.payment_status = "Pending"
+
+    def make_payment(self):
+        if self.status == "Confirmed":
+            self.payment_status = "Completed"
+            print(f"Payment of ${self.total_paycheck} made using {self.method_of_payment}.")
+        else:
+            print("Payment failed: Order not confirmed.")
+
+    def cancel_payment(self):
+        if self.payment_status == "Completed":
+            self.payment_status = "Refunded"
+            self.cancel_order()
+            print("Payment refunded.")
+        else:
+            print("No payment to cancel or refund.")
+
+    def process_payment(self):
+        if self.payment_status == "Completed":
+            print("Payment is being processed.")
+        else:
+            print("Payment not completed. Cannot process.")
+
+    def receipt(self):
+        if self.payment_status == "Completed":
+            return f"Receipt:\nUser: {self.customer.name}\nProduct: {self.product.name}\nTotal: ${self.total_paycheck}\nPaid by: {self.method_of_payment}"
+        return "No receipt available. Payment not completed."
+
+    def __str__(self):
+        return f"Payment for {self.quantity}x {self.product.name} by {self.customer.name} - Status: {self.payment_status}"
+
+p1 = Product(1, "Headphones", 150, 10)
+c1 = Customer(101, "Agnesa", "Berlin", 2)
+
+print(p1)
+print(c1)
+
+payment1 = Payment(c1, p1, 2, "Credit Card")
+payment1.make_order()
+payment1.make_payment()
+payment1.process_payment()
+print(payment1)
+print(payment1.receipt())
